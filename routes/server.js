@@ -8,7 +8,7 @@ import nodemailer from 'nodemailer';
 dotenv.config();
 const app = express();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const DOMAIN = process.env.CLIENT_URL || 'http://localhost:3000';
+const DOMAIN = process.env.CLIENT_URL || 'https://gtcoaching.vercel.app/';
 
 
 app.use(cors());
@@ -34,8 +34,8 @@ app.post('/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       line_items,
       mode: 'payment',
-      success_url: `${YOUR_DOMAIN}?success=true`,
-      cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+      success_url: `${DOMAIN}?success=true`,
+      cancel_url: `${DOMAIN}?canceled=true`,
     });
 
     res.status(200).json({ url: session.url });
