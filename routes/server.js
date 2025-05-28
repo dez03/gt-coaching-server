@@ -10,6 +10,7 @@ const app = express();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const DOMAIN = process.env.CLIENT_URL || 'http://localhost:3000';
 
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
@@ -33,8 +34,8 @@ app.post('/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       line_items,
       mode: 'payment',
-      success_url: `${DOMAIN}/success`,
-      cancel_url: `${DOMAIN}/cancel`,
+      success_url: `${YOUR_DOMAIN}?success=true`,
+      cancel_url: `${YOUR_DOMAIN}?canceled=true`,
     });
 
     res.status(200).json({ url: session.url });
